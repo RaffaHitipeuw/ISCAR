@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL("iscar.vercel.app"),
+  metadataBase: new URL("https://iscar.vercel.app"),
   title: "ISCAR 2026 ©",
   description:
     "Official website of ISCAR 2026. Wadah aspirasi, kreativitas, dan informasi terkini seputar kegiatan siswa dan organisasi OSIS.",

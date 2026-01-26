@@ -6,13 +6,17 @@ import { useMemo, useRef } from "react";
 export default function Rain({
   count = 1200,
   area = 100,
-  height = 50,
+  height = 60,
   speed = 45,
   length = 1.2,
+  cloudHeight = 40,
+  spawnOffset = 5,
 }) {
   const lines = useRef(null);
   const group = useRef(null);
   const { camera } = useThree();
+
+  const spawnY = cloudHeight + spawnOffset;
 
   const { positions, velocities } = useMemo(() => {
     const pos = new Float32Array(count * 6);
@@ -20,7 +24,7 @@ export default function Rain({
 
     for (let i = 0; i < count; i++) {
       const x = (Math.random() - 0.5) * area;
-      const y = Math.random() * height;
+      const y = spawnY - Math.random() * height;
       const z = (Math.random() - 0.5) * area;
 
       pos.set([x, y, z, x, y - length, z], i * 6);
@@ -28,18 +32,14 @@ export default function Rain({
     }
 
     return { positions: pos, velocities: vel };
-  }, [count, area, height, length, speed]);
+  }, [count, area, height, length, speed, spawnY]);
 
   useFrame((_, delta) => {
     if (!group.current || !lines.current) return;
 
     const dt = Math.min(delta, 0.033);
 
-    group.current.position.set(
-      camera.position.x,
-      camera.position.y + height * 0.5,
-      camera.position.z
-    );
+    group.current.position.set(camera.position.x, 0, camera.position.z);
 
     const pos = lines.current.geometry.attributes.position.array;
 
@@ -49,9 +49,9 @@ export default function Rain({
       pos[i * 6 + 1] -= v;
       pos[i * 6 + 4] -= v;
 
-      if (pos[i * 6 + 1] < -height) {
-        pos[i * 6 + 1] += height * 2;
-        pos[i * 6 + 4] = pos[i * 6 + 1] - length;
+      if (pos[i * 6 + 1] < spawnY - height) {
+        pos[i * 6 + 1] = spawnY;
+        pos[i * 6 + 4] = spawnY - length;
       }
     }
 
@@ -69,7 +69,6 @@ export default function Rain({
             itemSize={3}
           />
         </bufferGeometry>
-
         <lineBasicMaterial
           color="#bcdcff"
           transparent

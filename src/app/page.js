@@ -1,4 +1,4 @@
-import Scene from "../components/three/Scene";
+import Scene from "../components/three/scene/Scene";
 
 export default function Page() {
   return (

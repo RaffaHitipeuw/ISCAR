@@ -11,14 +11,19 @@ export default function CameraRail() {
 
   const keyframes = useRef([
     {
-      time: 5,
-      position: new THREE.Vector3(0, 150, 250),
+      time: 0,
+      position: new THREE.Vector3(0, 200, 270),
       lookAt: new THREE.Vector3(10, 0, 0),
     },
     {
-      time: 20,
-      position: new THREE.Vector3(0, 140, 120),
-      lookAt: new THREE.Vector3(0, 20, 0),
+      time: 5,
+      position: new THREE.Vector3(0, 200, 100),
+      lookAt: new THREE.Vector3(0, 40, 0),
+    },
+    {
+      time: 9,
+      position: new THREE.Vector3(0, 50, 100),
+      lookAt: new THREE.Vector3(0, 0, 0),
     },
   ]);
 
@@ -37,25 +42,23 @@ export default function CameraRail() {
     }
 
     const elapsed = clock.getElapsedTime() - startTime.current;
-    const kfA = keyframes.current[0];
-    const kfB = keyframes.current[1];
+    const kfs = keyframes.current;
 
-    if (elapsed < kfA.time) return;
-    if (elapsed > kfB.time) return;
+    let i = 0;
+    for (; i < kfs.length - 1; i++) {
+      if (elapsed >= kfs[i].time && elapsed <= kfs[i + 1].time) break;
+    }
+
+    if (i >= kfs.length - 1) return;
+
+    const kfA = kfs[i];
+    const kfB = kfs[i + 1];
 
     const alpha = (elapsed - kfA.time) / (kfB.time - kfA.time);
 
-    camera.position.lerpVectors(
-      kfA.position,
-      kfB.position,
-      alpha
-    );
+    camera.position.lerpVectors(kfA.position, kfB.position, alpha);
 
-    lookAtVec.current.lerpVectors(
-      kfA.lookAt,
-      kfB.lookAt,
-      alpha
-    );
+    lookAtVec.current.lerpVectors(kfA.lookAt, kfB.lookAt, alpha);
 
     camera.up.set(0, 1, 0);
     camera.lookAt(lookAtVec.current);

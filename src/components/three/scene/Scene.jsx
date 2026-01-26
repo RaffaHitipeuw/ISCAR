@@ -3,11 +3,10 @@
 import { Canvas } from "@react-three/fiber";
 import { useRef, useEffect } from "react";
 
-import CameraRail from "./CameraRail";
-import CameraLook from "./CameraLook";
-import Water from "./Water";
-import CloudGroup from "./CloudGroup";
-import Rain from "./Rain";
+import CameraRail from "../camera/CameraRail";
+import CameraLook from "../camera/CameraLook";
+import Water from "../environment/Water";
+import CloudGroup from "../environment/CloudGroup";
 
 function Lights() {
   const dirLight = useRef();
@@ -46,18 +45,8 @@ export default function Scene() {
       style={{ position: "fixed", inset: 0 }}
     >
       <Lights />
-
       <Water />
       <CloudGroup />
-
-      <Rain
-        count={900}
-        area={100}
-        height={50}
-        speed={45}
-        length={1.1}
-      />
-
       <CameraRail />
       <CameraLook />
     </Canvas>

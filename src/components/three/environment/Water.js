@@ -49,7 +49,7 @@ export default function Water() {
     }),
     [normalMap, envMap, depthTexture, camera]
   );
-
+  
   useFrame(({ clock }) => {
     uniforms.uTime.value = clock.getElapsedTime();
     uniforms.uCameraPos.value.copy(camera.position);

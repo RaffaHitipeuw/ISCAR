@@ -6,7 +6,7 @@ import RainEmitter from "./RainEmitter";
 
 const CLOUD_COUNT = 60;
 const AREA_SIZE = 400;
-const CLOUD_HEIGHT = 145;
+const CLOUD_HEIGHT = 300;
 
 export default function CloudGroup() {
   const clouds = useMemo(() => {

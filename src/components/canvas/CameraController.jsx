@@ -21,6 +21,7 @@ function cubicBezier(p1x, p1y, p2x, p2y) {
     return sampleCurveY(x);
   };
 }
+
 function lerpThreePoints(a, b, c, t) {
   const u = 1 - t;
   return u * u * a + 2 * u * t * b + t * t * c;
@@ -93,9 +94,9 @@ export default function CameraController() {
   const INTRO_DURATION = 10.5;
   const EXPLORE_DURATION = 3.5;
   const DESC_MOVE_DURATION = 2.0;
-  const GALLERY_DURATION = 4.0;
-  const ABOUT_DURATION = 4.0;
-  const SWEEP_DURATION = 6.5;
+  const GALLERY_DURATION = 2.5;
+  const ABOUT_DURATION = 2.5;
+  const SWEEP_DURATION = 5;
 
   const ZOOM_SPEED = 1.1;
   const ease = useRef(cubicBezier(0.45, 0.0, 0.55, 1.0));
@@ -278,7 +279,6 @@ export default function CameraController() {
       baseRotation.current.x = lerpThreePoints(
         kfGalleryRot.current.x, kf3Rot.current.x, kfAboutRot.current.x, eased
       );
-
       baseRotation.current.y = lerpThreePoints(
         kfGalleryRot.current.y, kf3Rot.current.y, kfAboutRot.current.y, eased
       );

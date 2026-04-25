@@ -12,9 +12,9 @@ export default function Navbar() {
 
   const handleAboutClick = () => {
     if (phase === "kf3") {
-      setPhase("aboutMove");      
+      setPhase("aboutMove");        
     } else if (phase === "gallery") {
-      setPhase("galleryToAbout"); 
+      setPhase("galleryToAbout");      
     }
   };
 
@@ -22,16 +22,15 @@ export default function Navbar() {
     if (phase === "gallery") {
       setPhase("galleryBack");      
     } else if (phase === "about") {
-      setPhase("aboutBack");  
+      setPhase("aboutBack");        
     }
-
   };
 
   const handleGalleryClick = () => {
     if (phase === "kf3") {
       setPhase("galleryMove");      
     } else if (phase === "about") {
-      setPhase("aboutToGallery");   
+      setPhase("aboutToGallery");  
     }
   };
 

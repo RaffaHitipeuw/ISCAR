@@ -32,12 +32,16 @@ function cubicBezier(p1x, p1y, p2x, p2y) {
   };
 }
 
+function easeInOutQuart(t) {
+  return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+}
+
 export default function Map() {
   const cameraKF3Mid = useIntroStore((s) => s.cameraKF3Mid);
   const divisiIndex = useIntroStore((s) => s.divisiIndex);
 
   const { scene } = useGLTF(
-    "/models/ISCARIA_15-v1.glb",
+    "/models/iscar-v1.glb",
     true,
     true,
     (loader) => {
@@ -60,7 +64,6 @@ export default function Map() {
   const lastDivisi = useRef(divisiIndex);
   const rotateDivisiActive = useRef(false);
   const rotateDivisiProgress = useRef(0);
-  const rotatePhase = useRef(0);
   const pendingUpdate = useRef(false);
 
   const elapsed = useRef(0);
@@ -71,7 +74,7 @@ export default function Map() {
   const LOGO_SMOOTH = 7;
   const ROLL_INTENSITY = 1.5;
   const ROTATE_SPEED = 1;
-  const ROTATE_DIVISI_SPEED = 1.8;
+  const ROTATE_DIVISI_SPEED = 1.2;
 
   const DIVISION_COLORS = [
     "ECA415",
@@ -247,7 +250,6 @@ export default function Map() {
     lastDivisi.current = divisiIndex;
     rotateDivisiActive.current = true;
     rotateDivisiProgress.current = 0;
-    rotatePhase.current = 1;
   }, [divisiIndex, rotateDone]);
 
   useFrame((state, delta) => {
@@ -295,30 +297,18 @@ export default function Map() {
     if (rotateDivisiActive.current && divisionPad.current) {
       rotateDivisiProgress.current += delta * ROTATE_DIVISI_SPEED;
       const t = Math.min(rotateDivisiProgress.current, 1);
-      const et = ease.current(t);
 
-      if (rotatePhase.current === 1) {
-        divisionPad.current.rotation.y = Math.PI * et;
+      const et = easeInOutQuart(t);
+      divisionPad.current.rotation.y = Math.PI * 2 * et;
 
-        if (t >= 0.5 && pendingUpdate.current) {
-          updateDivisionContent();
-          pendingUpdate.current = false;
-        }
+      if (t >= 0.5 && pendingUpdate.current) {
+        updateDivisionContent();
+        pendingUpdate.current = false;
+      }
 
-        if (t >= 1) {
-          rotatePhase.current = 2;
-          rotateDivisiProgress.current = 0;
-        }
-      } else {
-        divisionPad.current.rotation.y = THREE.MathUtils.lerp(
-          Math.PI,
-          Math.PI * 2,
-          et
-        );
-        if (t >= 1) {
-          rotateDivisiActive.current = false;
-          divisionPad.current.rotation.y = 0;
-        }
+      if (t >= 1) {
+        rotateDivisiActive.current = false;
+        divisionPad.current.rotation.y = 0;
       }
     }
   });

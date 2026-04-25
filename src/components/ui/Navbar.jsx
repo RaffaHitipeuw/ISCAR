@@ -3,18 +3,36 @@
 import { useIntroStore } from "@/store/introStore";
 
 export default function Navbar() {
+  const phase = useIntroStore((s) => s.phase);
   const cameraKF3Mid = useIntroStore((s) => s.cameraKF3Mid);
   const setPhase = useIntroStore((s) => s.setPhase);
-  const setCameraKF3Mid = useIntroStore((s) => s.setCameraKF3Mid);
 
   const clashDisplay = "'Clash Display', sans-serif";
   const interTight = "'Inter Tight', sans-serif";
 
-  const handleHomeClick = () => {
-    if (!cameraKF3Mid) return;
+  const handleAboutClick = () => {
+    if (phase === "kf3") {
+      setPhase("aboutMove");      
+    } else if (phase === "gallery") {
+      setPhase("galleryToAbout"); 
+    }
+  };
 
-    setCameraKF3Mid(false);
-    setPhase("intro");
+  const handleDivisionsClick = () => {
+    if (phase === "gallery") {
+      setPhase("galleryBack");      
+    } else if (phase === "about") {
+      setPhase("aboutBack");  
+    }
+
+  };
+
+  const handleGalleryClick = () => {
+    if (phase === "kf3") {
+      setPhase("galleryMove");      
+    } else if (phase === "about") {
+      setPhase("aboutToGallery");   
+    }
   };
 
   return (
@@ -38,8 +56,7 @@ export default function Navbar() {
         "
       >
         <div
-          onClick={handleHomeClick}
-          className="text-2xl tracking-wider cursor-pointer"
+          className="text-2xl tracking-wider"
           style={{ fontFamily: clashDisplay }}
         >
           ISCAR
@@ -49,10 +66,27 @@ export default function Navbar() {
           className="flex items-center gap-8 text-sm tracking-wide"
           style={{ fontFamily: interTight }}
         >
-          <button className="text-white">ABOUT</button>
-          <button className="text-white">DIVISIONS</button>
-          <button className="text-white" onClick={() => setPhase("galleryMove")}>GALLERY</button>
-          <button className="text-white">MAIN EVENT</button>
+          <button
+            className={`cursor-pointer transition-opacity duration-300 ${phase === "about" ? "opacity-100 underline underline-offset-4" : "opacity-70 hover:opacity-100"} text-white`}
+            onClick={handleAboutClick}
+          >
+            ABOUT
+          </button>
+          <button
+            className={`cursor-pointer transition-opacity duration-300 ${phase === "kf3" ? "opacity-100 underline underline-offset-4" : "opacity-70 hover:opacity-100"} text-white`}
+            onClick={handleDivisionsClick}
+          >
+            DIVISIONS
+          </button>
+          <button
+            className={`cursor-pointer transition-opacity duration-300 ${phase === "gallery" ? "opacity-100 underline underline-offset-4" : "opacity-70 hover:opacity-100"} text-white`}
+            onClick={handleGalleryClick}
+          >
+            GALLERY
+          </button>
+          <button className="text-white opacity-70 hover:opacity-100 transition-opacity duration-300">
+            MAIN EVENT
+          </button>
         </div>
       </div>
     </div>

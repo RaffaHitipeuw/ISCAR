@@ -24,4 +24,6 @@ export const useIntroStore = create((set) => ({
     set((s) => ({ divisiIndex: (s.divisiIndex + 1) % 7 })),
   prevDivisi: () =>
     set((s) => ({ divisiIndex: (s.divisiIndex + 6) % 7 })),
+
+  goBackFromGallery: () => set({ phase: "galleryBack" }),
 }));

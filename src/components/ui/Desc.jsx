@@ -20,7 +20,7 @@ const DIVISI_DATA = [
     members: [
       { role: "Mentor", name: "Ust. Faiz Fathurrahman N." },
       { role: "Ketua", name: "P. M. Wildanumukhaladun" },
-      { role: "Wakil Ketua", name: "Rafi’uddin Hannan" },
+      { role: "Wakil Ketua", name: "Rafi'uddin Hannan" },
       { role: "Sekretaris", name: "Imam Sandy Bachtiar" },
       { role: "Bendahara", name: "Rafif Ardinata" }
     ]
@@ -117,7 +117,6 @@ const DIVISI_DATA = [
             >
               Tugas Kami
             </h2>
-
             <p
               style={{ fontFamily: interTight }}
               className="text-white text-base leading-relaxed"
@@ -135,24 +134,17 @@ const DIVISI_DATA = [
             style={{ fontFamily: interTightBold }}
           >
             <div className={`space-y-4 ${currentData.maxHeight || "max-h-[40vh]"} overflow-y-auto pr-2 custom-scrollbar`}>
-
               {currentData.members.map((item, index, arr) => (
                 <div key={index}>
                   <div className="flex justify-between items-center gap-4">
-                    <span className="text-white text-sm">
-                      {item.role}
-                    </span>
-                    <span className="text-2xl font-bold text-right leading-tight">
-                      {item.name}
-                    </span>
+                    <span className="text-white text-sm">{item.role}</span>
+                    <span className="text-2xl font-bold text-right leading-tight">{item.name}</span>
                   </div>
-
                   {index !== arr.length - 1 && (
                     <div className="h-px bg-white/20 mt-3" />
                   )}
                 </div>
               ))}
-
             </div>
           </motion.div>
         </div>
@@ -167,21 +159,11 @@ const DIVISI_DATA = [
         </motion.button>
 
         <style jsx>{`
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.4);
-          }
+          .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+          .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+          .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+          .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
         `}</style>
-
       </motion.div>
     </AnimatePresence>
   );
